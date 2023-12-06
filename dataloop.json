@@ -1,0 +1,104 @@
+{
+  "displayName": "aws models",
+  "name": "aws-models",
+  "icon": "icon-dl-qa-sampling",
+  "components": {
+    "panels": [
+      {
+        "name": "contentModerationNodePanel",
+        "icon": "icon-dl-qa-sampling",
+        "supportedSlots": [
+          {
+            "type": "pipelineNodeConfig",
+            "configuration": {}
+          }
+        ],
+        "conditions": {
+          "resources": []
+        }
+      }
+    ],
+    "pipelineNodes": [
+      {
+        "invoke": {
+          "type": "function",
+          "namespace": "contentmoderationnode.content_moderation_module.detect_moderation_labels"
+        },
+        "categories": [
+          "image-utils"
+        ]
+      }
+    ],
+    "modules": [
+      {
+        "name": "content_moderation_module",
+        "entryPoint": "imageContentModeration/image_content_moderation.py",
+        "className": "ServiceRunner",
+        "initInputs": [
+          {
+            "type": "String",
+            "name": "aws_key_name"
+          },
+          {
+            "type": "String",
+            "name": "aws_secret_name"
+          }
+        ],
+        "functions": [
+          {
+            "name": "detect_moderation_labels",
+            "description": "aws content moderation",
+            "input": [
+              {
+                "type": "Item",
+                "name": "item"
+              }
+            ],
+            "displayIcon": "qa-sampling",
+            "displayName": "aws content moderation detection"
+          }
+        ]
+      }
+    ],
+    "services": [
+      {
+        "name": "contentmoderationnode",
+        "versions": {
+          "dtlpy": "1.86.13"
+        },
+        "panelNames": [
+          "contentModerationNodePanel"
+        ],
+        "initParams": {
+          "aws_key_name": "AWS_ACCESS_KEY_ID",
+          "aws_secret_name": "AWS_SECRET_ACCESS_KEY"
+        },
+        "moduleName": "content_moderation_module",
+        "runtime": {
+          "podType": "regular-xs",
+          "runnerImage": "shadimahameeddl/vision-test:latest",
+          "numReplicas": 1,
+          "concurrency": 10,
+          "pyPackages": {},
+          "singleAgent": false,
+          "autoscaler": {
+            "type": "rabbitmq",
+            "minReplicas": 1,
+            "maxReplicas": 2,
+            "queueLength": 10
+          },
+          "preemptible": false
+        },
+        "executionTimeout": 3600,
+        "drainTime": 600,
+        "onReset": "failed",
+        "runExecutionAsProcess": false,
+        "secrets": [
+          "6f7fa092-3896-4437-8b6c-2128dc1ad981",
+          "63e2363b-cfbc-4817-854f-c99f0ba4ad85"
+        ],
+        "maxAttempts": 3
+      }
+    ]
+  }
+}
