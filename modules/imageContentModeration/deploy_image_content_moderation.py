@@ -11,7 +11,7 @@ def get_package(project: dl.Project, deploy_new_package):
     ###############
     #   package   #
     ###############
-    src_path = str(pathlib.Path('.').resolve())
+    src_path = str(pathlib.Path('').resolve())
 
     if deploy_new_package:
 

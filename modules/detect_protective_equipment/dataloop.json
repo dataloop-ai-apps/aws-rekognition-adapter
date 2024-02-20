@@ -1,0 +1,138 @@
+{
+  "displayName": "AWS Detect Protective Equipment",
+  "name": "aws-detect-protective-equipment",
+  "scope": "project",
+  "version": "v0.0.4",
+  "attributes": {
+    "Provider": "AWS",
+    "Category": "Pipeline",
+    "Pipeline Type": "Node",
+    "Node Type": "Model"
+  },
+  "codebase": {
+    "type": "local",
+    "src_path": "../../"
+  },
+  "codebaseTMP": {
+    "type": "git",
+    "gitUrl": "https://github.com/dataloop-ai-apps/google-vision-adapter.git",
+    "gitTag": "v0.0.3"
+  },
+  "components": {
+    "pipelineNodes": [
+      {
+        "invoke": {
+          "type": "function",
+          "namespace": "aws-detect-protective-equipment-v2.aws_detect_protective_equipment_v2.detect_protective_equipment"
+        },
+        "name": "Detect Protective Equipment",
+        "categories": [
+          "AWS-Rekognition"
+        ],
+        "displayName": "Detect Protective Equipment",
+        "description": "AWS Rekognition Detect Protective Equipment Model",
+        "scope": "project",
+        "configuration": {
+          "fields": [
+            {
+              "name": "name",
+              "title": "Node Name",
+              "props": {
+                "title": true,
+                "type": "string",
+                "default": "AWS Rekognition Detect Protective Equipment",
+                "required": true,
+                "placeholder": "Insert node name"
+              },
+              "rules": [
+                {
+                  "type": "required",
+                  "effect": "error"
+                }
+              ],
+              "widget": "dl-input"
+            },
+            {
+              "name": "threshold",
+              "title": "threshold",
+              "props": {
+                "type": "number",
+                "default": 0.8,
+                "min": 0,
+                "max": 1,
+                "step": 0.05,
+                "title": true,
+                "required": true
+              },
+              "rules": [
+                {
+                  "type": "required",
+                  "effect": "error"
+                }
+              ],
+              "widget": "dl-slider"
+            }
+          ]
+        }
+      }
+    ],
+    "modules": [
+      {
+        "name": "aws_detect_protective_equipment_v2",
+        "entryPoint": "modules/detect_protective_equipment/detect_protective_equipment.py",
+        "className": "ServiceRunner",
+        "initInputs": [
+          {
+            "type": "String",
+            "name": "integration_name"
+          }
+        ],
+        "functions": [
+          {
+            "name": "detect_protective_equipment",
+            "input": [
+              {
+                "type": "Item",
+                "name": "item"
+              }
+            ],
+            "output": [
+              {
+                "type": "Item",
+                "name": "item"
+              },
+              {
+                "type": "Float",
+                "name": "threshold"
+              }
+            ],
+            "displayIcon": "icon-dl-aws-dark",
+            "displayName": "Detect Protective Labels"
+          }
+        ]
+      }
+    ],
+    "services": [
+      {
+        "name": "aws-detect-protective-equipment-v2",
+        "moduleName": "aws_detect_protective_equipment_v2",
+        "secrets": [
+        ],
+        "runtime": {
+          "podType": "regular-s",
+          "numReplicas": 1,
+          "concurrency": 10,
+          "singleAgent": false,
+          "autoscaler": {
+            "type": "rabbitmq",
+            "minReplicas": 1,
+            "maxReplicas": 2,
+            "queueLength": 10
+          },
+          "preemptible": false
+        },
+        "operation": "none"
+      }
+    ]
+  }
+}

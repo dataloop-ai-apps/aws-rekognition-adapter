@@ -1,5 +1,1 @@
-#!/bin/bash
-
-pip install boto3
-
-echo "Setup completed, libraries installed."
+pip install -r requirements.txt
