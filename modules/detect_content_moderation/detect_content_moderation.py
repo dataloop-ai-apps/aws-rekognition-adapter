@@ -2,7 +2,6 @@ import boto3
 import botocore.exceptions
 import dtlpy as dl
 import logging
-
 from modules.base_service_runner import RekognitionServiceRunner
 
 logger = logging.getLogger(name=__name__)
@@ -10,9 +9,13 @@ logger = logging.getLogger(name=__name__)
 
 class ServiceRunner(RekognitionServiceRunner):
 
-    def aws_detect_labels(self, item: dl.Item, threshold=0.8):
+    def detect_moderation_labels(self, item: dl.Item, threshold=0.8):
         """
-        Object Detection using AWS Rekognition - detect labels model.
+        Object Detection using AWS Rekognition - detect protective equipment model.
+
+        Detects moderation labels in the image. Moderation labels identify content
+        that may be inappropriate for some audiences.
+
 
         :param item: Dataloop item.
         :param threshold: A confidence threshold value for the detection.
@@ -47,32 +50,33 @@ class ServiceRunner(RekognitionServiceRunner):
                 image = {'Bytes': img.read()}
 
         try:
-            response = client.detect_labels(Image=image,
-                                            MinConfidence=threshold)
+            response = client.detect_moderation_labels(Image=image)
 
         except botocore.exceptions.ClientError:
             logger.exception(msg=f"Couldn't detect moderation labels in {item.name}")
             raise
 
-        print('Detected labels for ' + item.name)
+        print('Detected moderation labels for ' + item.name)
         builder = item.annotations.builder()
         labels = set()
-        for label in response['Labels']:
+        for label in response['ModerationLabels']:
             if label['Confidence'] >= threshold:
-                for instance in label['Instances']:
-                    bbox = instance['BoundingBox']
-                    left = int(bbox['Left'] * item.width)
-                    top = int(bbox['Top'] * item.height)
-                    right = left + int(bbox['Width'] * item.width)
-                    bottom = top + int(bbox['Height'] * item.height)
-                    builder.add(annotation_definition=dl.Box(top=top,
-                                                             bottom=bottom,
-                                                             left=left,
-                                                             right=right,
-                                                             label=label['Name']),
-                                model_info={'name': 'AWS Rekognition', 'confidence': label['Confidence'] / 100})
-                    labels.add(label['Name'])
+                builder.add(annotation_definition=dl.Classification(label=label['Name']),
+                            model_info={'name': 'AWS Rekognition', 'confidence': label['Confidence'] / 100})
+                labels.add(label['Name'])
         annotations = item.annotations.upload(builder)
+
+        # Parenting
+        sorted_annotations = sorted(response['ModerationLabels'], key=lambda x: x['TaxonomyLevel'])
+        for sorted_annotation in sorted_annotations:
+            parent_name = sorted_annotation['ParentName']
+            if parent_name:
+                # Find the parent annotation
+                parent_annotation = next((a for a in annotations.annotations if a.label == parent_name), None)
+                cur_annotations = next((a for a in annotations.annotations if a.label == sorted_annotation['Name']),
+                                       None)
+                if parent_annotation:
+                    # Assign the parent's to the child
+                    cur_annotations.parent_id = parent_annotation.id
+                    cur_annotations.update(system_metadata=True)
         logger.debug(f"{len(annotations)} Annotations has been uploaded")
-
-

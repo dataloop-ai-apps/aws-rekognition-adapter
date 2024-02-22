@@ -120,16 +120,12 @@
         ],
         "runtime": {
           "podType": "regular-s",
-          "numReplicas": 1,
           "concurrency": 10,
-          "singleAgent": false,
           "autoscaler": {
-            "type": "rabbitmq",
-            "minReplicas": 1,
+            "minReplicas": 0,
             "maxReplicas": 2,
             "queueLength": 10
-          },
-          "preemptible": false
+          }
         },
         "operation": "none"
       }

@@ -16,6 +16,8 @@ class ServiceRunner(RekognitionServiceRunner):
         :param item: Dataloop item.
         :param threshold: A confidence threshold value for the detection.
         """
+
+        threshold = threshold * 100
         driver = item.dataset.project.drivers.get(driver_id=item.dataset.driver)
         region = getattr(driver, 'region', 'eu-west-1')
 
@@ -47,55 +49,39 @@ class ServiceRunner(RekognitionServiceRunner):
         try:
             response = client.detect_protective_equipment(Image=image,
                                                           SummarizationAttributes={
-                                                              'MinConfidence': threshold * 100,
+                                                              'MinConfidence': threshold,
                                                               'RequiredEquipmentTypes': [
                                                                   'FACE_COVER', 'HAND_COVER', 'HEAD_COVER',
                                                               ]
                                                           })
-            status_code = response['ResponseMetadata']['HTTPStatusCode']
+        except botocore.exceptions.ClientError:
+            logger.exception(msg=f"Couldn't detect moderation labels in {item.name}")
+            raise
 
-            if 200 <= status_code < 300:
-                logger.info(f"Response is OK! Status code: {status_code}")
+        print('Detected protective equipment for ' + item.name)
+        builder = item.annotations.builder()
+        labels = set()
+        for person in response['Persons']:
 
-            elif 400 <= status_code < 500:
-                error_message = f"AWS service returned a client error with status code {status_code}"
-                raise botocore.exceptions.ClientError(
-                    error_response={'Error': {'Code': 'ClientError', 'Message': error_message}},
-                    operation_name='DetectProtectiveEquipment')
+            for body_part in person['BodyParts']:
 
-            else:
-                error_message = f"AWS service returned an error in response with status code {status_code}"
-                raise Exception(error_message)
+                ppe_items = body_part['EquipmentDetections']
+                for ppe_item in ppe_items:
+                    if ppe_item['Confidence'] >= threshold:
+                        bbox = ppe_item['BoundingBox']
+                        left = int(bbox['Left'] * item.width)
+                        top = int(bbox['Top'] * item.height)
+                        right = left + int(bbox['Width'] * item.width)
+                        bottom = top + int(bbox['Height'] * item.height)
+                        builder.add(annotation_definition=dl.Box(top=top,
+                                                                 bottom=bottom,
+                                                                 left=left,
+                                                                 right=right,
+                                                                 label=ppe_item['Type']),
+                                    model_info={'name': 'AWS Rekognition',
+                                                'confidence': ppe_item['Confidence'] / 100})
+                        labels.add(ppe_item['Type'])
+                annotations = item.annotations.upload(builder)
+                logger.debug(f"{len(annotations)} Annotations has been uploaded")
 
-            print('Detected protective equipment for ' + item.name)
-            builder = item.annotations.builder()
-            labels = set()
-            for person in response['Persons']:
-
-                for body_part in person['BodyParts']:
-
-                    ppe_items = body_part['EquipmentDetections']
-                    for ppe_item in ppe_items:
-                        if ppe_item['Confidence'] >= threshold * 100:
-                            bbox = ppe_item['BoundingBox']
-                            left = int(bbox['Left'] * item.width)
-                            top = int(bbox['Top'] * item.height)
-                            right = left + int(bbox['Width'] * item.width)
-                            bottom = top + int(bbox['Height'] * item.height)
-                            builder.add(annotation_definition=dl.Box(top=top,
-                                                                     bottom=bottom,
-                                                                     left=left,
-                                                                     right=right,
-                                                                     label=ppe_item['Type']),
-                                        model_info={'name': 'AWS Rekognition',
-                                                    'confidence': ppe_item['Confidence'] / 100})
-                            labels.add(ppe_item['Type'])
-                    annotations = item.annotations.upload(builder)
-                    logger.debug(f"{len(annotations)} Annotations has been uploaded")
-
-        except botocore.exceptions.ClientError as e:
-            print("Client error:", e)
-
-        except Exception as e:
-            print("Unexpected error:", e)
 

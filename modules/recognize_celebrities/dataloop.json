@@ -1,6 +1,6 @@
 {
-  "displayName": "AWS Detect Faces",
-  "name": "aws-detect-faces",
+  "displayName": "AWS Recognize Celebrities",
+  "name": "aws-recognize-celebrities",
   "scope": "project",
   "version": "v0.0.4",
   "attributes": {
@@ -23,14 +23,14 @@
       {
         "invoke": {
           "type": "function",
-          "namespace": "aws-detect-faces-v2.aws_detect_faces_v2.detect_faces"
+          "namespace": "aws-recognize-celebrities-v2.aws_recognize_celebrities_v2.recognize_celebrities"
         },
-        "name": "Detect Faces",
+        "name": "Recognize Celebrities",
         "categories": [
           "AWS-Rekognition"
         ],
-        "displayName": "Detect Faces",
-        "description": "AWS Rekognition Detect Faces Model",
+        "displayName": "Recognize Celebrities",
+        "description": "AWS Rekognition Recognize Celebrities Model",
         "scope": "project",
         "configuration": {
           "fields": [
@@ -40,7 +40,7 @@
               "props": {
                 "title": true,
                 "type": "string",
-                "default": "AWS Rekognition Detect Faces",
+                "default": "AWS Rekognition Recognize Celebrities",
                 "required": true,
                 "placeholder": "Insert node name"
               },
@@ -78,8 +78,8 @@
     ],
     "modules": [
       {
-        "name": "aws_detect_faces_v2",
-        "entryPoint": "modules/face_detection/detect_faces.py",
+        "name": "aws_recognize_celebrities_v2",
+        "entryPoint": "modules/recognize_celebrities/recognize_celebrities.py",
         "className": "ServiceRunner",
         "initInputs": [
           {
@@ -89,7 +89,7 @@
         ],
         "functions": [
           {
-            "name": "detect_faces",
+            "name": "recognize_celebrities",
             "input": [
               {
                 "type": "Item",
@@ -107,15 +107,15 @@
               }
             ],
             "displayIcon": "icon-dl-aws-dark",
-            "displayName": "Detect Faces"
+            "displayName": "Recognize Celebrities"
           }
         ]
       }
     ],
     "services": [
       {
-        "name": "aws-detect-faces-v2",
-        "moduleName": "aws_detect_faces_v2",
+        "name": "aws-recognize-celebrities-v2",
+        "moduleName": "aws_recognize_celebrities_v2",
         "secrets": [
         ],
         "runtime": {

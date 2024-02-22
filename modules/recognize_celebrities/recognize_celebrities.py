@@ -2,7 +2,6 @@ import boto3
 import botocore.exceptions
 import dtlpy as dl
 import logging
-import json
 from modules.base_service_runner import RekognitionServiceRunner
 
 logger = logging.getLogger(name=__name__)
@@ -47,13 +46,14 @@ class ServiceRunner(RekognitionServiceRunner):
 
         print(f'Auto linked all points that are inside of a box')
 
-    def detect_faces(self, item: dl.Item, threshold=0.8):
+    def recognize_celebrities(self, item: dl.Item, threshold=0.8):
         """
-        Object Detection using AWS Rekognition - detect faces model.
+        Object Detection using AWS Rekognition - detect protective equipment model.
 
         :param item: Dataloop item.
         :param threshold: A confidence threshold value for the detection.
         """
+
         threshold = threshold * 100
         driver = item.dataset.project.drivers.get(driver_id=item.dataset.driver)
         region = getattr(driver, 'region', 'eu-west-1')
@@ -84,46 +84,47 @@ class ServiceRunner(RekognitionServiceRunner):
                 image = {'Bytes': img.read()}
 
         try:
-            response = client.detect_faces(Image=image, Attributes=['ALL'])
+            response = client.recognize_celebrities(Image=image)
+
         except botocore.exceptions.ClientError:
             logger.exception(msg=f"Couldn't detect moderation labels in {item.name}")
             raise
 
-        print('Detected faces for ' + item.name)
+        print('Detected celebrities faces for ' + item.name)
         builder = item.annotations.builder()
         labels = set()
+        for celebrity in response['CelebrityFaces']:
+            print('Name: ' + celebrity['Name'])
+            print('Id: ' + celebrity['Id'])
+            print('KnownGender: ' + celebrity['KnownGender']['Type'])
+            print('Smile: ' + str(celebrity['Face']['Smile']['Value']))
+            print('Position:')
+            print('   Left: ' + '{:.2f}'.format(celebrity['Face']['BoundingBox']['Height']))
+            print('   Top: ' + '{:.2f}'.format(celebrity['Face']['BoundingBox']['Top']))
+            print('Info')
+            for url in celebrity['Urls']:
+                print('   ' + url)
+            print()
 
-        for face_detail in response['FaceDetails']:
-            print('The detected face is between ' + str(face_detail['AgeRange']['Low'])
-                  + ' and ' + str(face_detail['AgeRange']['High']) + ' years old')
-
-            print('Here are the attributes:')
-            print(json.dumps(face_detail, indent=4, sort_keys=True))
-
-            # Example of Access attributes predictions for individual face details and print them
-            print("Gender: " + str(face_detail['Gender']))
-            print("Smile: " + str(face_detail['Smile']))
-            print("Eyeglasses: " + str(face_detail['Eyeglasses']))
-            print("Face Occluded: " + str(face_detail['FaceOccluded']))
-            print("Emotions: " + str(face_detail['Emotions'][0]))
-
-            if face_detail['Confidence'] >= threshold:
+            if celebrity['MatchConfidence'] >= threshold:
+                celebrity_face = celebrity['Face']
                 # Points
-                landmarks_annotations = face_detail['Landmarks']
+                landmarks_annotations = celebrity_face['Landmarks']
+                confidence = celebrity_face['Confidence'] / 100
                 for landmarks_annotation in landmarks_annotations:
                     builder.add(annotation_definition=dl.Point(x=int(landmarks_annotation.get('X') * item.width),
                                                                y=int(landmarks_annotation.get('Y') * item.height),
                                                                label=landmarks_annotation.get('Type')),
                                 model_info={'name': 'AWS Rekognition',
-                                            'confidence': face_detail['Confidence'] / 100})
+                                            'confidence': confidence})
 
                 # Bounding Box
-                left = int(face_detail['BoundingBox']['Left'] * item.width)
-                top = int(face_detail['BoundingBox']['Top'] * item.height)
-                right = left + int(face_detail['BoundingBox']['Width'] * item.width)
-                bottom = top + int(face_detail['BoundingBox']['Height'] * item.height)
-                label = face_detail['Gender']['Value']
-                confidence = face_detail['Confidence'] / 100
+                left = int(celebrity_face['BoundingBox']['Left'] * item.width)
+                top = int(celebrity_face['BoundingBox']['Top'] * item.height)
+                right = left + int(celebrity_face['BoundingBox']['Width'] * item.width)
+                bottom = top + int(celebrity_face['BoundingBox']['Height'] * item.height)
+                label = celebrity['Name']
+
                 builder.add(annotation_definition=dl.Box(top=top,
                                                          bottom=bottom,
                                                          left=left,
@@ -136,4 +137,3 @@ class ServiceRunner(RekognitionServiceRunner):
         logger.debug(f"{len(annotations)} Annotations has been uploaded")
 
         self.auto_link_box_to_points(item=item)
-
