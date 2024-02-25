@@ -279,3 +279,4 @@ pyrightconfig.json
 
 aws-credentials.json
 /modules/face_detection/handling-attributes.py
+/modules/__pycache__
