@@ -1,7 +1,7 @@
 {
   "displayName": "AWS Detect Moderation Labels",
   "name": "aws-detect-moderation-labels",
-  "scope": "project",
+  "scope": "public",
   "version": "0.0.5",
   "attributes": {
     "Provider": "AWS",
@@ -10,12 +10,8 @@
     "Node Type": "Model"
   },
   "codebase": {
-    "type": "local",
-    "src_path": "../../"
-  },
-  "codebaseTMP": {
     "type": "git",
-    "gitUrl": "https://github.com/dataloop-ai-apps/aws-rekognition-adapter/tree/convert-to-dpk",
+    "gitUrl": "https://github.com/dataloop-ai-apps/aws-rekognition-adapter.git",
     "gitTag": "0.0.5"
   },
   "components": {
