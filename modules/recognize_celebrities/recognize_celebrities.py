@@ -11,6 +11,11 @@ class ServiceRunner(RekognitionServiceRunner):
 
     @staticmethod
     def auto_link_box_to_points(item: dl.Item):
+        """
+        A function to auto link point annotations to their parent box annotation.
+
+        :param item: Dataloop item.
+        """
         annotations = item.annotations.list()
 
         for box_annotation in annotations:
@@ -48,7 +53,7 @@ class ServiceRunner(RekognitionServiceRunner):
 
     def recognize_celebrities(self, item: dl.Item, threshold=0.8):
         """
-        Object Detection using AWS Rekognition - detect protective equipment model.
+        Object Detection using AWS Rekognition - recognize celebrities model.
 
         :param item: Dataloop item.
         :param threshold: A confidence threshold value for the detection.
