@@ -1,0 +1,159 @@
+{
+  "displayName": "AWS Detect Text",
+  "name": "aws-detect-text",
+  "scope": "public",
+  "version": "0.0.6",
+  "attributes": {
+    "Provider": "AWS",
+    "Category": "Pipeline",
+    "Pipeline Type": "Node",
+    "Node Type": "Models"
+  },
+  "codebase": {
+    "type": "git",
+    "gitUrl": "https://github.com/dataloop-ai-apps/aws-rekognition-adapter.git",
+    "gitTag": "0.0.6"
+  },
+  "components": {
+    "pipelineNodes": [
+      {
+        "invoke": {
+          "type": "function",
+          "namespace": "aws-detect-text-v2.aws_detect_text_v2.detect_text"
+        },
+        "name": "Detect Text",
+        "categories": [
+          "AWS-Rekognition"
+        ],
+        "displayName": "Detect Text",
+        "description": "AWS Rekognition Detect Text Model",
+        "scope": "project",
+        "configuration": {
+          "fields": [
+            {
+              "name": "name",
+              "title": "Node Name",
+              "props": {
+                "title": true,
+                "type": "string",
+                "default": "AWS Rekognition Detect Text",
+                "required": true,
+                "placeholder": "Insert node name"
+              },
+              "rules": [
+                {
+                  "type": "required",
+                  "effect": "error"
+                }
+              ],
+              "widget": "dl-input"
+            },
+            {
+              "name": "threshold",
+              "title": "Threshold",
+              "props": {
+                "type": "number",
+                "default": 0.8,
+                "min": 0,
+                "max": 1,
+                "step": 0.05,
+                "title": true,
+                "required": true
+              },
+              "rules": [
+                {
+                  "type": "required",
+                  "effect": "error"
+                }
+              ],
+              "widget": "dl-slider"
+            },
+            {
+              "name": "annotation_type",
+              "title": "Annotation Type",
+              "props": {
+                "type": " String",
+                "required": true,
+                "options": [
+                  {
+                    "label": "Box",
+                    "value": "Box"
+                  },
+                  {
+                    "label": "Polygon",
+                    "value": "Polygon"
+                  }
+                ]
+              },
+              "rules": [
+                {
+                  "type": "required",
+                  "effect": "error"
+                }
+              ],
+              "widget": "dl-select"
+            }
+          ]
+        }
+      }
+    ],
+    "modules": [
+      {
+        "name": "aws_detect_text_v2",
+        "entryPoint": "modules/detect_text/detect_text.py",
+        "className": "ServiceRunner",
+        "initInputs": [
+          {
+            "type": "String",
+            "name": "integration_name"
+          }
+        ],
+        "functions": [
+          {
+            "name": "detect_text",
+            "input": [
+              {
+                "type": "Item",
+                "name": "item"
+              }
+            ],
+            "output": [
+              {
+                "type": "Item",
+                "name": "item"
+              },
+              {
+                "type": "Float",
+                "name": "threshold"
+              },
+              {
+                "type": "String",
+                "name": "annotation_type"
+              }
+            ],
+            "displayIcon": "icon-dl-aws-dark",
+            "displayName": "Detect Text"
+          }
+        ]
+      }
+    ],
+    "services": [
+      {
+        "name": "aws-detect-text-v2",
+        "moduleName": "aws_detect_text_v2",
+        "secrets": [
+        ],
+        "runtime": {
+          "podType": "regular-s",
+          "concurrency": 10,
+          "autoscaler": {
+            "minReplicas": 0,
+            "maxReplicas": 2,
+            "queueLength": 10
+          }
+        },
+        "operation": "none"
+      }
+    ]
+  }
+}

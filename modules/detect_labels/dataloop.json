@@ -1,0 +1,130 @@
+{
+  "displayName": "AWS Rekognition Detect Labels",
+  "name": "aws-rekognition-detect-labels",
+  "scope": "public",
+  "version": "0.0.6",
+  "attributes": {
+    "Provider": "AWS",
+    "Category": "Pipeline",
+    "Pipeline Type": "Node",
+    "Node Type": "Models"
+  },
+  "codebase": {
+    "type": "git",
+    "gitUrl": "https://github.com/dataloop-ai-apps/aws-rekognition-adapter.git",
+    "gitTag": "0.0.6"
+  },
+  "components": {
+    "pipelineNodes": [
+      {
+        "invoke": {
+          "type": "function",
+          "namespace": "aws-rekognition-detect-labels-v2.aws_rekognition_detect_labels_v2.aws_detect_labels"
+        },
+        "name": "AWS Rekognition Detect labels",
+        "categories": [
+          "AWS-Rekognition"
+        ],
+        "displayName": "Detect labels",
+        "description": "AWS Rekognition Detect Labels Model",
+        "scope": "project",
+        "configuration": {
+          "fields": [
+            {
+              "name": "name",
+              "title": "Node Name",
+              "props": {
+                "title": true,
+                "type": "string",
+                "default": "AWS Rekognition Detect labels",
+                "required": true,
+                "placeholder": "Insert node name"
+              },
+              "rules": [
+                {
+                  "type": "required",
+                  "effect": "error"
+                }
+              ],
+              "widget": "dl-input"
+            },
+            {
+              "name": "threshold",
+              "title": "threshold",
+              "props": {
+                "type": "number",
+                "default": 0.8,
+                "min": 0,
+                "max": 1,
+                "step": 0.05,
+                "title": true,
+                "required": true
+              },
+              "rules": [
+                {
+                  "type": "required",
+                  "effect": "error"
+                }
+              ],
+              "widget": "dl-slider"
+            }
+          ]
+        }
+      }
+    ],
+    "modules": [
+      {
+        "name": "aws_rekognition_detect_labels_v2",
+        "entryPoint": "modules/detect_labels/detect_labels.py",
+        "className": "ServiceRunner",
+        "initInputs": [
+          {
+            "type": "String",
+            "name": "integration_name"
+          }
+        ],
+        "functions": [
+          {
+            "name": "aws_detect_labels",
+            "input": [
+              {
+                "type": "Item",
+                "name": "item"
+              }
+            ],
+            "output": [
+              {
+                "type": "Item",
+                "name": "item"
+              },
+              {
+                "type": "Float",
+                "name": "threshold"
+              }
+            ],
+            "displayIcon": "icon-dl-aws-dark",
+            "displayName": "AWS Detect Labels"
+          }
+        ]
+      }
+    ],
+    "services": [
+      {
+        "name": "aws-rekognition-detect-labels-v2",
+        "moduleName": "aws_rekognition_detect_labels_v2",
+        "secrets": [
+        ],
+        "runtime": {
+          "podType": "regular-s",
+          "concurrency": 10,
+          "autoscaler": {
+            "minReplicas": 0,
+            "maxReplicas": 2,
+            "queueLength": 10
+          }
+        },
+        "operation": "none"
+      }
+    ]
+  }
+}
