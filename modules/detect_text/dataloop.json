@@ -35,7 +35,7 @@
               "title": "Node Name",
               "props": {
                 "title": true,
-                "type": "String",
+                "type": "string",
                 "default": "AWS Rekognition Detect Text",
                 "required": true,
                 "placeholder": "Insert node name"
@@ -52,7 +52,7 @@
               "name": "threshold",
               "title": "Confidence Threshold",
               "props": {
-                "type": "Number",
+                "type": "number",
                 "default": 0.8,
                 "min": 0,
                 "max": 1,
@@ -72,23 +72,24 @@
               "name": "annotation_type",
               "title": "Annotation Type",
               "props": {
-                "type": "String",
+                "type": "string",
                 "required": true,
                 "options": [
                   {
-                    "label": "Box",
-                    "value": "Box"
+                    "value": "Box",
+                    "label": "Box"
                   },
                   {
-                    "label": "Polygon",
-                    "value": "Polygon"
+                    "value": "Polygon",
+                    "label": "Polygon"
                   }
                 ]
               },
               "rules": [
                 {
                   "type": "required",
-                  "effect": "error"
+                  "effect": "error",
+                  "errorMessage": "Annotation Type is required"
                 }
               ],
               "widget": "dl-select"

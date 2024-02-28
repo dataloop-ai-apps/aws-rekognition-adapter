@@ -12,32 +12,38 @@ integration_name = 'aws-integration'
 
 def test_detect_protective_equipment(item: dl.Item, threshold=0.8):
     s = detect_protective_equipment.ServiceRunner(integration_name=integration_name)
-    s.detect_protective_equipment(item=item, threshold=threshold)
+    annotated_item = s.detect_protective_equipment(item=item, threshold=threshold)
+    print(annotated_item)
 
 
 def test_detect_labels(item: dl.Item, threshold=0.8):
     s = detect_labels.ServiceRunner(integration_name=integration_name)
-    s.aws_detect_labels(item=item, threshold=threshold)
+    annotated_item = s.aws_detect_labels(item=item, threshold=threshold)
+    print(annotated_item)
 
 
 def test_detect_faces(item: dl.Item, threshold=0.8):
     s = detect_faces.ServiceRunner(integration_name=integration_name)
-    s.detect_faces(item=item, threshold=threshold)
+    annotated_item = s.detect_faces(item=item, threshold=threshold)
+    print(annotated_item)
 
 
 def test_detect_moderation_labels(item: dl.Item, threshold=0.8):
     s = detect_content_moderation.ServiceRunner(integration_name=integration_name)
-    s.detect_moderation_labels(item=item, threshold=threshold)
+    annotated_item = s.detect_moderation_labels(item=item, threshold=threshold)
+    print(annotated_item)
 
 
 def test_detect_text(item: dl.Item, annotation_type, threshold=0.8):
     s = detect_text.ServiceRunner(integration_name=integration_name)
-    s.detect_text(item=item, annotation_type=annotation_type, threshold=threshold)
+    annotated_item = s.detect_text(item=item, annotation_type=annotation_type, threshold=threshold)
+    print(annotated_item)
 
 
 def test_recognize_celebrities(item: dl.Item, threshold=0.8):
     s = recognize_celebrities.ServiceRunner(integration_name=integration_name)
-    s.recognize_celebrities(item=item, threshold=threshold)
+    annotated_item = s.recognize_celebrities(item=item, threshold=threshold)
+    print(annotated_item)
 
 
 if __name__ == "__main__":
