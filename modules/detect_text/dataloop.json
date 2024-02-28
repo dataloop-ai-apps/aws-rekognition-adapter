@@ -116,14 +116,6 @@
               {
                 "type": "Item",
                 "name": "item"
-              },
-              {
-                "type": "Float",
-                "name": "threshold"
-              },
-              {
-                "type": "String",
-                "name": "annotation_type"
               }
             ],
             "output": [

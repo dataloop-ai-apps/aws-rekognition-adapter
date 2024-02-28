@@ -9,15 +9,19 @@ logger = logging.getLogger(name=__name__)
 
 class ServiceRunner(RekognitionServiceRunner):
 
-    def detect_protective_equipment(self, item: dl.Item, threshold=0.8):
+    def detect_protective_equipment(self, item: dl.Item, context: dl.Context):
         """
         Object Detection using AWS Rekognition - detect protective equipment model.
 
         :param item: Dataloop item.
-        :param threshold: A confidence threshold value for the detection.
+        :param context: Dataloop context to set the threshold
         """
 
+        node = context.node
+        threshold = node.metadata['customNodeConfig']['threshold']
         threshold = threshold * 100
+        logger.info('threshold: {}'.format(threshold))
+
         driver = item.dataset.project.drivers.get(driver_id=item.dataset.driver)
         region = getattr(driver, 'region', 'eu-west-1')
 

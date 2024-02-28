@@ -4,12 +4,12 @@ import dtlpy as dl
 import logging
 from modules.base_service_runner import RekognitionServiceRunner
 
-logger = logging.getLogger(name=__name__)
+logger = logging.getLogger(name='aws-rekognition')
 
 
 class ServiceRunner(RekognitionServiceRunner):
 
-    def detect_moderation_labels(self, item: dl.Item, threshold=0.8):
+    def detect_moderation_labels(self, item: dl.Item, context: dl.Context):
         """
         Object Detection using AWS Rekognition - detect protective equipment model.
 
@@ -18,9 +18,13 @@ class ServiceRunner(RekognitionServiceRunner):
 
 
         :param item: Dataloop item.
-        :param threshold: A confidence threshold value for the detection.
+        :param context: Dataloop context to set the threshold
         """
-        threshold = threshold * 100
+        node = context.node
+        threshold = node.metadata['customNodeConfig']['threshold']
+        threshold = threshold*100
+        logger.info('threshold: {}'.format(threshold))
+
         driver = item.dataset.project.drivers.get(driver_id=item.dataset.driver)
         region = getattr(driver, 'region', 'eu-west-1')
 

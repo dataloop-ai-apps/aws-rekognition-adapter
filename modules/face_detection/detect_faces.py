@@ -52,14 +52,18 @@ class ServiceRunner(RekognitionServiceRunner):
 
         print(f'Auto linked all points that are inside of a box')
 
-    def detect_faces(self, item: dl.Item, threshold=0.8):
+    def detect_faces(self, item: dl.Item, context: dl.Context):
         """
         Object Detection using AWS Rekognition - detect faces model.
 
         :param item: Dataloop item.
-        :param threshold: A confidence threshold value for the detection.
+        :param context: Dataloop context to set the threshold
         """
+        node = context.node
+        threshold = node.metadata['customNodeConfig']['threshold']
         threshold = threshold * 100
+        logger.info('threshold: {}'.format(threshold))
+
         driver = item.dataset.project.drivers.get(driver_id=item.dataset.driver)
         region = getattr(driver, 'region', 'eu-west-1')
 
@@ -143,4 +147,3 @@ class ServiceRunner(RekognitionServiceRunner):
         self.auto_link_box_to_points(item=item)
 
         return item
-

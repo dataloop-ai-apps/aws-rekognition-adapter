@@ -91,10 +91,6 @@
               {
                 "type": "Item",
                 "name": "item"
-              },
-              {
-                "type": "Float",
-                "name": "threshold"
               }
             ],
             "output": [

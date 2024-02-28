@@ -9,14 +9,22 @@ logger = logging.getLogger(name=__name__)
 
 class ServiceRunner(RekognitionServiceRunner):
 
-    def detect_text(self, item: dl.Item, annotation_type, threshold=0.8):
+    def detect_text(self, item: dl.Item, context: dl.Context):
         """
         Object Detection using AWS Rekognition - detect text model.
 
-        :param annotation_type: set the type of annotation, either Box or Polygon
+        :param context: Dataloop context to set the type of annotation, either Box or Polygon and threshold
         :param item: Dataloop item.
-        :param threshold: A confidence threshold value for the detection.
         """
+
+        node = context.node
+        threshold = node.metadata['customNodeConfig']['threshold']
+        threshold = threshold*100
+        logger.info('threshold: {}'.format(threshold))
+
+        annotation_type = node.metadata['customNodeConfig']['annotation_type']
+        logger.info('annotation_type: {}'.format(annotation_type))
+
         driver = item.dataset.project.drivers.get(driver_id=item.dataset.driver)
         region = getattr(driver, 'region', 'eu-west-1')
 
