@@ -80,3 +80,5 @@ class ServiceRunner(RekognitionServiceRunner):
                     cur_annotations.parent_id = parent_annotation.id
                     cur_annotations.update(system_metadata=True)
         logger.debug(f"{len(annotations)} Annotations has been uploaded")
+
+        return item

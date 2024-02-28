@@ -84,4 +84,4 @@ class ServiceRunner(RekognitionServiceRunner):
                 annotations = item.annotations.upload(builder)
                 logger.debug(f"{len(annotations)} Annotations has been uploaded")
 
-
+        return item

@@ -142,3 +142,5 @@ class ServiceRunner(RekognitionServiceRunner):
 
         self.auto_link_box_to_points(item=item)
 
+        return item
+

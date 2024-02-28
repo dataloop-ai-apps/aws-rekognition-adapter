@@ -142,3 +142,5 @@ class ServiceRunner(RekognitionServiceRunner):
         logger.debug(f"{len(annotations)} Annotations has been uploaded")
 
         self.auto_link_box_to_points(item=item)
+
+        return item

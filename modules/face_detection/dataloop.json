@@ -3,7 +3,7 @@
   "name": "aws-detect-faces",
   "scope": "public",
   "version": "0.0.9",
-   "description": "AWS Rekognition Detect Faces Model - This model utilizes AWS Rekognition to detect moderation labels. An AWS S3 Integration is required in the service settings. Manage the integration in the data governance page.",
+  "description": "AWS Rekognition Detect Faces Model - This model utilizes AWS Rekognition to detect moderation labels. An AWS S3 Integration is required in the service settings. Manage the integration in the data governance page.",
   "attributes": {
     "Provider": "AWS",
     "Category": "Pipeline",
@@ -36,7 +36,7 @@
               "title": "Node Name",
               "props": {
                 "title": true,
-                "type": "string",
+                "type": "String",
                 "default": "AWS Rekognition Detect Faces",
                 "required": true,
                 "placeholder": "Insert node name"
@@ -51,9 +51,9 @@
             },
             {
               "name": "threshold",
-              "title": "threshold",
+              "title": "Confidence Threshold",
               "props": {
-                "type": "number",
+                "type": "Number",
                 "default": 0.8,
                 "min": 0,
                 "max": 1,
@@ -91,16 +91,16 @@
               {
                 "type": "Item",
                 "name": "item"
+              },
+              {
+                "type": "Float",
+                "name": "threshold"
               }
             ],
             "output": [
               {
                 "type": "Item",
                 "name": "item"
-              },
-              {
-                "type": "Float",
-                "name": "threshold"
               }
             ],
             "displayIcon": "icon-dl-aws-dark",
