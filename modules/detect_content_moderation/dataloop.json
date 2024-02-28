@@ -36,7 +36,7 @@
               "title": "Node Name",
               "props": {
                 "title": true,
-                "type": "string",
+                "type": "String",
                 "default": "AWS Rekognition Detect Moderation Labels",
                 "required": true,
                 "placeholder": "Insert node name"

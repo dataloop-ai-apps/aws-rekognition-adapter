@@ -3,7 +3,7 @@
   "name": "aws-detect-text",
   "scope": "public",
   "version": "0.0.6",
-   "description": "AWS Rekognition Detect Text Model - This model utilizes AWS Rekognition to detect moderation labels. An AWS S3 Integration is required in the service settings. Manage the integration in the data governance page.",
+  "description": "AWS Rekognition Detect Text Model - This model utilizes AWS Rekognition to detect moderation labels. An AWS S3 Integration is required in the service settings. Manage the integration in the data governance page.",
   "attributes": {
     "Provider": "AWS",
     "Category": "Pipeline",
@@ -36,7 +36,7 @@
               "title": "Node Name",
               "props": {
                 "title": true,
-                "type": "string",
+                "type": "String",
                 "default": "AWS Rekognition Detect Text",
                 "required": true,
                 "placeholder": "Insert node name"
@@ -73,7 +73,7 @@
               "name": "annotation_type",
               "title": "Annotation Type",
               "props": {
-                "type": " String",
+                "type": "String",
                 "required": true,
                 "options": [
                   {
@@ -116,12 +116,6 @@
               {
                 "type": "Item",
                 "name": "item"
-              }
-            ],
-            "output": [
-              {
-                "type": "Item",
-                "name": "item"
               },
               {
                 "type": "Float",
@@ -131,6 +125,8 @@
                 "type": "String",
                 "name": "annotation_type"
               }
+            ],
+            "output": [
             ],
             "displayIcon": "icon-dl-aws-dark",
             "displayName": "Detect Text"
