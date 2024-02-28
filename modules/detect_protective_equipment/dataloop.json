@@ -28,7 +28,7 @@
         ],
         "displayName": "Detect Protective Equipment",
         "description": "AWS Rekognition Detect Protective Equipment Model",
-        "scope": "project",
+        "scope": "node",
         "configuration": {
           "fields": [
             {

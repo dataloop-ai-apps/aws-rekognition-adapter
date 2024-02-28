@@ -28,7 +28,7 @@
         ],
         "displayName": "Detect Faces",
         "description": "AWS Rekognition Detect Faces Model",
-        "scope": "project",
+        "scope": "node",
         "configuration": {
           "fields": [
             {

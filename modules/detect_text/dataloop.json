@@ -27,7 +27,7 @@
         ],
         "displayName": "Detect Text",
         "description": "AWS Rekognition Detect Text Model",
-        "scope": "project",
+        "scope": "node",
         "configuration": {
           "fields": [
             {

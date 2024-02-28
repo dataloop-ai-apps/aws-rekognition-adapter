@@ -28,7 +28,7 @@
         ],
         "displayName": "Detect Moderation Labels",
         "description": "AWS Rekognition Detect Moderation Labels Model",
-        "scope": "project",
+        "scope": "node",
         "configuration": {
           "fields": [
             {

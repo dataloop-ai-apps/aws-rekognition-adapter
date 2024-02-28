@@ -28,7 +28,7 @@
         ],
         "displayName": "Recognize Celebrities",
         "description": "AWS Rekognition Recognize Celebrities Model",
-        "scope": "project",
+        "scope": "node",
         "configuration": {
           "fields": [
             {

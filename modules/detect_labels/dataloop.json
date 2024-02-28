@@ -28,7 +28,7 @@
         ],
         "displayName": "Detect labels",
         "description": "AWS Rekognition Detect Labels Model",
-        "scope": "project",
+        "scope": "node",
         "configuration": {
           "fields": [
             {
