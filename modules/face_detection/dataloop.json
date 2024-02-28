@@ -2,7 +2,7 @@
   "displayName": "AWS Detect Faces",
   "name": "aws-detect-faces",
   "scope": "public",
-  "version": "0.0.13",
+  "version": "0.1.0",
   "description": "AWS Rekognition Detect Faces Model - This model utilizes AWS Rekognition to detect moderation labels. An AWS S3 Integration is required in the service settings. Manage the integration in the data governance page.",
   "attributes": {
     "Provider": "AWS",
@@ -13,7 +13,7 @@
   "codebase": {
     "type": "git",
     "gitUrl": "https://github.com/dataloop-ai-apps/aws-rekognition-adapter.git",
-    "gitTag": "0.0.13"
+    "gitTag": "0.1.0"
   },
   "components": {
     "pipelineNodes": [
