@@ -56,10 +56,11 @@ Install the desired pipeline node from StartLine:
 
 
 
-### Add integrations
-Init parameter have to have same name as secrets name.
+### Create pipeline node
 
 
 ![bandicam2024-03-1715-16-15-658-ezgif com-video-to-gif-converter (1)](https://github.com/dataloop-ai-apps/aws-rekognition-adapter/assets/152878248/5158b3f9-5e26-486e-b250-943917463920)
 
 
+### Add integration
+Init parameter have to have same name as secrets name.
