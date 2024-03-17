@@ -51,7 +51,8 @@ Box or Polygon.
 Install the desired pipeline node from StartLine:
 
 
-![bandicam2024-03-1715-16-15-658-ezgif com-video-to-gif-converter](https://github.com/dataloop-ai-apps/aws-rekognition-adapter/assets/152878248/4b327cdf-ba73-42c9-b94a-3b431032d9dc)
+![bandicam2024-03-1715-15-44-872-ezgif com-video-to-gif-converter](https://github.com/dataloop-ai-apps/aws-rekognition-adapter/assets/152878248/4ccde44d-952b-4c42-935c-b2df554d1946)
+
 
 
 
@@ -59,6 +60,6 @@ Install the desired pipeline node from StartLine:
 Init parameter have to have same name as secrets name.
 
 
+![bandicam2024-03-1715-16-15-658-ezgif com-video-to-gif-converter (1)](https://github.com/dataloop-ai-apps/aws-rekognition-adapter/assets/152878248/5158b3f9-5e26-486e-b250-943917463920)
 
-https://github.com/dataloop-ai-apps/aws-rekognition-adapter/assets/152878248/0a105518-6cfb-4aaa-8858-7a9c482b26fb
 
