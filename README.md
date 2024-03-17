@@ -51,8 +51,7 @@ Box or Polygon.
 Install the desired pipeline node from StartLine:
 
 
-https://github.com/dataloop-ai-apps/aws-rekognition-adapter/assets/152878248/a0ae121f-8139-4838-9c52-45adc682b0d4
-
+![bandicam2024-03-1715-16-15-658-ezgif com-video-to-gif-converter](https://github.com/dataloop-ai-apps/aws-rekognition-adapter/assets/152878248/4b327cdf-ba73-42c9-b94a-3b431032d9dc)
 
 
 
