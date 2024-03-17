@@ -50,9 +50,16 @@ Box or Polygon.
 ### Installation - Dataloop platform
 Install the desired pipeline node from StartLine:
 
-[](..%2F..%2F..%2FDocuments%2FBandicam%2Fbandicam%202024-03-17%2015-15-44-872.mp4)
+
+https://github.com/dataloop-ai-apps/aws-rekognition-adapter/assets/152878248/a0ae121f-8139-4838-9c52-45adc682b0d4
+
+
+
 
 ### Add integrations
 Init parameter have to have same name as secrets name.
 
-[](..%2F..%2F..%2FDocuments%2FBandicam%2Fbandicam%202024-03-17%2015-16-15-658.mp4)
+
+
+https://github.com/dataloop-ai-apps/aws-rekognition-adapter/assets/152878248/0a105518-6cfb-4aaa-8858-7a9c482b26fb
+
