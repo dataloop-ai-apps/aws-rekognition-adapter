@@ -6,9 +6,9 @@
   "attributes": {
     "Provider": "AWS",
     "Category": "Application",
-    "Pipeline Type": "Node",
     "Node Type": "Models",
     "Application Type": [
+      "Pipeline Node",
       "Pipeline Node"
     ]
   },
