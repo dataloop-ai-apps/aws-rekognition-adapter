@@ -5,9 +5,12 @@
   "version": "0.1.0",
   "attributes": {
     "Provider": "AWS",
-    "Category": "Pipeline",
+    "Category": "Application",
     "Pipeline Type": "Node",
-    "Node Type": "Models"
+    "Node Type": "Models",
+    "Application Type": [
+      "Pipeline Node"
+    ]
   },
   "codebase": {
     "type": "git",
@@ -134,8 +137,7 @@
       {
         "name": "aws-detect-text-v2",
         "moduleName": "aws_detect_text_v2",
-        "secrets": [
-        ],
+        "secrets": [],
         "runtime": {
           "podType": "regular-s",
           "concurrency": 10,

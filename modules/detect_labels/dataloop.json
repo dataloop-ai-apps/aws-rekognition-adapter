@@ -6,9 +6,12 @@
   "description": "AWS Rekognition Detect Labels Model - This model utilizes AWS Rekognition to detect moderation labels. An AWS S3 Integration is required in the service settings. Manage the integration in the data governance page.",
   "attributes": {
     "Provider": "AWS",
-    "Category": "Pipeline",
+    "Category": "Application",
     "Pipeline Type": "Node",
-    "Node Type": "Models"
+    "Node Type": "Models",
+    "Application Type": [
+      "Pipeline Node"
+    ]
   },
   "codebase": {
     "type": "git",
@@ -109,8 +112,7 @@
       {
         "name": "aws-rekognition-detect-labels-v2",
         "moduleName": "aws_rekognition_detect_labels_v2",
-        "secrets": [
-        ],
+        "secrets": [],
         "runtime": {
           "podType": "regular-s",
           "concurrency": 10,
