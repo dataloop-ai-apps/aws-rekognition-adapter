@@ -99,7 +99,7 @@
                 "name": "item"
               }
             ],
-            "displayIcon": "icon-dl-aws-dark",
+            "displayIcon": "icon-dl-label-filled",
             "displayName": "AWS Detect Labels"
           }
         ]
@@ -109,8 +109,7 @@
       {
         "name": "aws-rekognition-detect-labels-v2",
         "moduleName": "aws_rekognition_detect_labels_v2",
-        "secrets": [
-        ],
+        "secrets": [],
         "runtime": {
           "podType": "regular-s",
           "concurrency": 10,

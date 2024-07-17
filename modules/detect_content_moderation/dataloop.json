@@ -99,7 +99,7 @@
                 "name": "item"
               }
             ],
-            "displayIcon": "icon-dl-aws-dark",
+            "displayIcon": "icon-dl-critical",
             "displayName": "Detect Moderation Labels"
           }
         ]
@@ -109,8 +109,7 @@
       {
         "name": "aws-detect-moderation-labels-v2",
         "moduleName": "aws_detect_moderation_labels_v2",
-        "secrets": [
-        ],
+        "secrets": [],
         "runtime": {
           "podType": "regular-s",
           "concurrency": 10,

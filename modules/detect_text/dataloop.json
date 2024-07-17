@@ -124,7 +124,7 @@
                 "name": "item"
               }
             ],
-            "displayIcon": "icon-dl-aws-dark",
+            "displayIcon": "icon-dl-text-detection",
             "displayName": "Detect Text"
           }
         ]
@@ -134,8 +134,7 @@
       {
         "name": "aws-detect-text-v2",
         "moduleName": "aws_detect_text_v2",
-        "secrets": [
-        ],
+        "secrets": [],
         "runtime": {
           "podType": "regular-s",
           "concurrency": 10,
