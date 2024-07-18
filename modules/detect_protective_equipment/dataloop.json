@@ -9,7 +9,8 @@
     "Category": "Application",
     "Application Type": [
       "Pipeline Node"
-    ]
+    ],
+    "Media Type": ["Image"]
   },
   "codebase": {
     "type": "git",
