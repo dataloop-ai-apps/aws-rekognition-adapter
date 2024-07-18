@@ -100,7 +100,7 @@
                 "name": "item"
               }
             ],
-            "displayIcon": "icon-dl-aws-dark",
+            "displayIcon": "icon-dl-equipment-detection",
             "displayName": "Detect Protective Labels"
           }
         ]

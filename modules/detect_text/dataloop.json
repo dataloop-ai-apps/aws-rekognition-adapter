@@ -125,7 +125,7 @@
                 "name": "item"
               }
             ],
-            "displayIcon": "icon-dl-aws-dark",
+            "displayIcon": "icon-dl-text-detection",
             "displayName": "Detect Text"
           }
         ]

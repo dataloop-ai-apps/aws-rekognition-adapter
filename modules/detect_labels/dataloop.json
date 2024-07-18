@@ -100,7 +100,7 @@
                 "name": "item"
               }
             ],
-            "displayIcon": "icon-dl-aws-dark",
+            "displayIcon": "icon-dl-label-filled",
             "displayName": "AWS Detect Labels"
           }
         ]

@@ -100,7 +100,7 @@
                 "name": "item"
               }
             ],
-            "displayIcon": "icon-dl-aws-dark",
+            "displayIcon": "icon-dl-face-detection",
             "displayName": "Detect Faces"
           }
         ]
