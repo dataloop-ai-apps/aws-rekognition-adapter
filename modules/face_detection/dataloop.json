@@ -6,9 +6,10 @@
   "description": "AWS Rekognition Detect Faces Model - This model utilizes AWS Rekognition to detect moderation labels. An AWS S3 Integration is required in the service settings. Manage the integration in the data governance page.",
   "attributes": {
     "Provider": "AWS",
-    "Category": "Pipeline",
-    "Pipeline Type": "Node",
-    "Node Type": "Models"
+    "Category": "Application",
+    "Application Type": [
+      "Pipeline Node"
+    ]
   },
   "codebase": {
     "type": "git",
@@ -109,8 +110,7 @@
       {
         "name": "aws-detect-faces-v2",
         "moduleName": "aws_detect_faces_v2",
-        "secrets": [
-        ],
+        "secrets": [],
         "runtime": {
           "podType": "regular-s",
           "concurrency": 10,
